@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atendimento AZ - Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         /* ============================================================
            RESET E CONFIGURAÇÕES GERAIS
@@ -55,8 +58,15 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: var(--opacity); }
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: var(--opacity);
+            }
         }
 
         /* EFEITO DE SCANLINES */
@@ -75,8 +85,13 @@
         }
 
         @keyframes scanline {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 0 100%;
+            }
         }
 
         /* EFEITO DE GRID */
@@ -246,8 +261,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         .hero-section h2 {
@@ -803,6 +825,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- EFEITOS DE FUNDO -->
     <div class="grid-bg"></div>
@@ -845,7 +868,7 @@
         SISTEMA AZ
         ============================================================ -->
         <div class="section-title">
-            <span>🖥️ Sistema AZ</span>
+            <span>🖥️ Atendimento AZ</span>
             <span class="line"></span>
         </div>
 
@@ -865,6 +888,22 @@
                 <div class="card-title">Módulos</div>
                 <div class="card-desc">Dashboard de acessos</div>
             </a>
+
+            <!-- BASE DE CHAMADOS -->
+            <a href="chamados.html" target="_blank" class="system-card">
+                <span class="card-badge">PRINCIPAL</span>
+                <span class="card-icon">💬</span>
+                <div class="card-title">Chamados</div>
+                <div class="card-desc">Chamados jira com regras de negócios.</div>
+            </a>
+
+            <!-- PARA ADIÇÃO FUTURA -->
+            <a href="" target="_self" class="system-card">
+                <span class="card-badge">PRINCIPAL</span>
+                <span class="card-icon">❓</span>
+                <div class="card-title">Em breve</div>
+                <div class="card-desc">Para expansão futura...</div>
+            </a>
         </div>
 
         <!-- ============================================================
@@ -880,9 +919,16 @@
                 <!-- Links de exemplo - edite aqui -->
                 <a href="https://confluence.atlassian.com" target="_blank" class="external-link">
                     <span class="link-icon">📚</span>
-                    <span class="link-label">Confluence</span>
+                    <span class="link-label">Confluence PB</span>
                     <span class="link-arrow">↗</span>
                 </a>
+
+                <a href="https://confluence.atlassian.com" target="_blank" class="external-link">
+                    <span class="link-icon">📚</span>
+                    <span class="link-label">Confluence ES</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+
                 <a href="https://www.atlassian.com/software/jira" target="_blank" class="external-link">
                     <span class="link-icon">🐞</span>
                     <span class="link-label">Jira</span>
@@ -893,23 +939,8 @@
                     <span class="link-label">Google Docs</span>
                     <span class="link-arrow">↗</span>
                 </a>
-                <a href="https://trello.com" target="_blank" class="external-link">
-                    <span class="link-icon">📋</span>
-                    <span class="link-label">Trello</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://slack.com" target="_blank" class="external-link">
-                    <span class="link-icon">💬</span>
-                    <span class="link-label">Slack</span>
-                    <span class="link-arrow">↗</span>
-                </a>
-                <a href="https://github.com" target="_blank" class="external-link">
-                    <span class="link-icon">🐙</span>
-                    <span class="link-label">GitHub</span>
-                    <span class="link-arrow">↗</span>
-                </a>
                 <a href="#" class="external-link" onclick="showToast('📋 Em breve.')">
-                    <span class="link-icon">🧠</span>
+                    <span class="link-icon">❓</span>
                     <span class="link-label">Futuro</span>
                     <span class="link-arrow">↗</span>
                 </a>
@@ -918,6 +949,17 @@
                     <span class="link-label">Futuro</span>
                     <span class="link-arrow">↗</span>
                 </a>
+                <a href="#" class="external-link" onclick="showToast('📋 Em breve.')">
+                    <span class="link-icon">❓</span>
+                    <span class="link-label">Futuro</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+                <a href="#" class="external-link" onclick="showToast('📋 Em breve.')">
+                    <span class="link-icon">❓</span>
+                    <span class="link-label">Futuro</span>
+                    <span class="link-arrow">↗</span>
+                </a>
+
             </div>
         </div>
 
@@ -1024,7 +1066,7 @@
         // EFEITO NOS BOTÕES
         // ============================================================
         document.querySelectorAll('.system-card[href]').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 this.style.transform = 'scale(0.97)';
                 setTimeout(() => {
                     this.style.transform = '';
@@ -1035,9 +1077,9 @@
         // ============================================================
         // SHORTCUTS
         // ============================================================
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.ctrlKey || e.metaKey) {
-                switch(e.key.toLowerCase()) {
+                switch (e.key.toLowerCase()) {
                     case 'f':
                         e.preventDefault();
                         window.open('formulario.html', '_blank');
@@ -1056,4 +1098,5 @@
         console.log('🔗 Edite os links externos no HTML (seção "Links Úteis")');
     </script>
 </body>
+
 </html>
