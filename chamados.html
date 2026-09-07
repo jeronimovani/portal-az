@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Chamados - Jira</title>
+    <style>
+        /* ============================================================
+           FONTES
+           ============================================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a12;
+            color: #e8e8e8;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* ============================================================
+           MODO CLARO
+           ============================================================ */
+        body.light-mode {
+            background: #f0edf5;
+            color: #1a1a2e;
+        }
+
+        body.light-mode .header {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 200, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .header h1 {
+            color: #1a1a2e;
+        }
+
+        body.light-mode .header h1 span {
+            color: #d4008a;
+        }
+
+        body.light-mode .chamado-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        body.light-mode .chamado-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 200, 255, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body.light-mode .chamado-card .titulo {
+            color: #1a1a2e;
+        }
+
+        body.light-mode .chamado-card .descricao {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        body.light-mode .chamado-card .cliente {
+            color: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        body.light-mode .chamado-card .tag {
+            background: rgba(212, 0, 138, 0.08);
+            color: #d4008a;
+        }
+
+        body.light-mode .chamado-card .link-chamado {
+            color: rgba(0, 100, 200, 0.5);
+            border-color: rgba(0, 100, 200, 0.1);
+        }
+
+        body.light-mode .chamado-card .link-chamado:hover {
+            color: #0066cc;
+            border-color: rgba(0, 100, 200, 0.2);
+            background: rgba(0, 100, 200, 0.04);
+        }
+
+        body.light-mode .controls {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.04);
+        }
+
+        body.light-mode .search-box {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .search-box input {
+            color: #1a1a2e;
+        }
+
+        body.light-mode .search-box input::placeholder {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .search-box .icon {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .filtros-botoes button {
+            color: rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .filtros-botoes button:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        body.light-mode .filtros-botoes button.active {
+            background: rgba(212, 0, 138, 0.08);
+            border-color: rgba(212, 0, 138, 0.2);
+            color: #d4008a;
+        }
+
+        body.light-mode .result-count {
+            color: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-mode .badge-online {
+            background: rgba(0, 200, 100, 0.08);
+            border-color: rgba(0, 200, 100, 0.15);
+            color: rgba(0, 150, 80, 0.8);
+        }
+
+        body.light-mode .badge-online .dot {
+            background: #00cc66;
+        }
+
+        body.light-mode .logo-box {
+            background: linear-gradient(135deg, #d4008a, #0066cc);
+            color: #fff;
+        }
+
+        body.light-mode .header .subtitle {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .toggle-theme {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.06);
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .toggle-theme:hover {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .btn-adicionar {
+            background: rgba(212, 0, 138, 0.08);
+            border-color: rgba(212, 0, 138, 0.2);
+            color: #d4008a;
+        }
+
+        body.light-mode .btn-adicionar:hover {
+            background: rgba(212, 0, 138, 0.15);
+        }
+
+        body.light-mode .btn-limpar {
+            background: rgba(200, 0, 50, 0.06);
+            border-color: rgba(200, 0, 50, 0.1);
+            color: rgba(200, 0, 50, 0.5);
+        }
+
+        body.light-mode .btn-limpar:hover {
+            background: rgba(200, 0, 50, 0.1);
+            color: rgba(200, 0, 50, 0.7);
+        }
+
+        body.light-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .modal-header {
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .modal-header h2 {
+            color: #1a1a2e;
+        }
+
+        body.light-mode .modal-content label {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        body.light-mode .modal-content input,
+        body.light-mode .modal-content textarea,
+        body.light-mode .modal-content select {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #1a1a2e;
+        }
+
+        body.light-mode .modal-content input:focus,
+        body.light-mode .modal-content textarea:focus,
+        body.light-mode .modal-content select:focus {
+            border-color: #d4008a;
+        }
+
+        body.light-mode .modal-footer .btn-salvar {
+            background: linear-gradient(135deg, #d4008a, #0066cc);
+            color: #fff;
+        }
+
+        body.light-mode .modal-footer .btn-cancelar {
+            background: rgba(200, 0, 50, 0.06);
+            border-color: rgba(200, 0, 50, 0.1);
+            color: rgba(200, 0, 50, 0.5);
+        }
+
+        body.light-mode .modal-footer .btn-cancelar:hover {
+            background: rgba(200, 0, 50, 0.1);
+            color: rgba(200, 0, 50, 0.7);
+        }
+
+        body.light-mode .empty-state {
+            color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .toggle-theme .thumb {
+            transform: translateX(0px);
+            background: linear-gradient(135deg, #f0c000, #ff8800);
+        }
+
+        body.light-mode .modal-close {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-mode .modal-close:hover {
+            color: #d4008a;
+        }
+
+        body.light-mode .chamado-card .btn-excluir {
+            color: rgba(200, 0, 50, 0.3);
+        }
+
+        body.light-mode .chamado-card .btn-excluir:hover {
+            color: #cc0033;
+        }
+
+        body.light-mode .chamado-card .btn-editar {
+            color: rgba(0, 100, 200, 0.3);
+        }
+
+        body.light-mode .chamado-card .btn-editar:hover {
+            color: #0066cc;
+        }
+
+        body.light-mode .toast {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a1a2e;
+            border-color: #d4008a;
+            box-shadow: 0 0 30px rgba(212, 0, 138, 0.1);
+        }
+
+        /* ============================================================
+           FUNDO RETROWAVE
+           ============================================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 200, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.06) 0%, transparent 40%),
+                repeating-linear-gradient(0deg,
+                    rgba(0, 200, 255, 0.015) 0px,
+                    rgba(0, 200, 255, 0.015) 1px,
+                    transparent 1px,
+                    transparent 4px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.light-mode::before {
+            background:
+                radial-gradient(circle at 10% 20%, rgba(212, 0, 138, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 100, 200, 0.04) 0%, transparent 40%);
+        }
+
+        .retro-lines {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 0, 200, 0.03) 40%, rgba(0, 200, 255, 0.05) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body.light-mode .retro-lines {
+            background: linear-gradient(180deg, transparent 0%, rgba(212, 0, 138, 0.03) 40%, rgba(0, 100, 200, 0.04) 100%);
+        }
+
+        .retro-lines::before {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 200, 0.15), rgba(0, 200, 255, 0.15), transparent);
+            animation: wave-line 6s ease-in-out infinite;
+        }
+
+        body.light-mode .retro-lines::before {
+            background: linear-gradient(90deg, transparent, rgba(212, 0, 138, 0.12), rgba(0, 100, 200, 0.12), transparent);
+        }
+
+        @keyframes wave-line {
+            0%,
+            100% {
+                transform: translateX(-10%);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(10%);
+                opacity: 1;
+            }
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 24px;
+            background: rgba(10, 5, 30, 0.85);
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo-box {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #ff00c8, #00c8ff);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            color: #0a0a12;
+            box-shadow: 0 0 30px rgba(255, 0, 200, 0.15);
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .header h1 span {
+            color: #ff00c8;
+            transition: color 0.3s ease;
+        }
+
+        .header .subtitle {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* TOGGLE MODO CLARO/ESCURO */
+        .toggle-theme {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px 4px 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .toggle-theme:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .toggle-theme .thumb {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #ff00c8, #00c8ff);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 200, 0.2);
+        }
+
+        .badge-online {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            background: rgba(0, 255, 100, 0.06);
+            border: 1px solid rgba(0, 255, 100, 0.08);
+            border-radius: 20px;
+            font-size: 0.6rem;
+            color: rgba(0, 255, 100, 0.6);
+        }
+
+        .badge-online .dot {
+            width: 6px;
+            height: 6px;
+            background: #00ff64;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* ============================================================
+           CONTROLES
+           ============================================================ */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px 18px;
+            background: rgba(10, 5, 30, 0.4);
+            border: 1px solid rgba(0, 200, 255, 0.06);
+            border-radius: 10px;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 10px;
+            z-index: 5;
+            backdrop-filter: blur(8px);
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 200, 255, 0.08);
+            border-radius: 8px;
+            padding: 0 12px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: rgba(255, 0, 200, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 200, 0.05);
+        }
+
+        .search-box .icon {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.15);
+            margin-right: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #e8e8e8;
+            padding: 10px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .filtros-botoes {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filtros-botoes button {
+            padding: 6px 16px;
+            background: transparent;
+            border: 1px solid rgba(0, 200, 255, 0.06);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filtros-botoes button:hover {
+            background: rgba(0, 200, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .filtros-botoes button.active {
+            background: rgba(255, 0, 200, 0.08);
+            border-color: rgba(255, 0, 200, 0.2);
+            color: #ff00c8;
+        }
+
+        .result-count {
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.15);
+            margin-left: auto;
+            padding-left: 12px;
+            white-space: nowrap;
+        }
+
+        .botoes-acoes {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .btn-adicionar {
+            padding: 6px 18px;
+            background: rgba(255, 0, 200, 0.08);
+            border: 1px solid rgba(255, 0, 200, 0.15);
+            border-radius: 6px;
+            color: #ff00c8;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-adicionar:hover {
+            background: rgba(255, 0, 200, 0.15);
+        }
+
+        .btn-limpar {
+            padding: 6px 14px;
+            background: rgba(255, 0, 64, 0.06);
+            border: 1px solid rgba(255, 0, 64, 0.06);
+            border-radius: 6px;
+            color: rgba(255, 0, 64, 0.3);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-limpar:hover {
+            background: rgba(255, 0, 64, 0.1);
+            color: rgba(255, 0, 64, 0.5);
+        }
+
+        /* ============================================================
+           CONTAINER
+           ============================================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================================================
+           GRADE DE CHAMADOS
+           ============================================================ */
+        .chamados-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        /* ============================================================
+           CARD DO CHAMADO
+           ============================================================ */
+        .chamado-card {
+            background: rgba(10, 5, 30, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.06);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chamado-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff00c8, #00c8ff);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chamado-card:hover {
+            border-color: rgba(0, 200, 255, 0.15);
+            transform: translateY(-3px);
+            background: rgba(10, 5, 30, 0.85);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .chamado-card:hover::before {
+            opacity: 1;
+        }
+
+        .chamado-card .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .chamado-card .titulo {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e8e8e8;
+            letter-spacing: 0.3px;
+            flex: 1;
+        }
+
+        .chamado-card .cliente {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .chamado-card .descricao {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .chamado-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .chamado-card .tag {
+            font-size: 0.55rem;
+            padding: 2px 10px;
+            background: rgba(255, 0, 200, 0.06);
+            color: rgba(255, 0, 200, 0.4);
+            border-radius: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .chamado-card .rodape {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 200, 255, 0.04);
+        }
+
+        .chamado-card .link-chamado {
+            font-size: 0.65rem;
+            color: rgba(0, 200, 255, 0.3);
+            text-decoration: none;
+            padding: 3px 14px;
+            border: 1px solid rgba(0, 200, 255, 0.06);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chamado-card .link-chamado:hover {
+            color: #00c8ff;
+            border-color: rgba(0, 200, 255, 0.15);
+            background: rgba(0, 200, 255, 0.04);
+        }
+
+        .chamado-card .acoes {
+            display: flex;
+            gap: 4px;
+        }
+
+        .chamado-card .btn-editar {
+            background: none;
+            border: none;
+            color: rgba(0, 200, 255, 0.15);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .chamado-card .btn-editar:hover {
+            color: #00c8ff;
+            background: rgba(0, 200, 255, 0.04);
+        }
+
+        .chamado-card .btn-excluir {
+            background: none;
+            border: none;
+            color: rgba(255, 0, 64, 0.15);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .chamado-card .btn-excluir:hover {
+            color: #ff0040;
+            background: rgba(255, 0, 64, 0.04);
+        }
+
+        .chamado-card .data-criacao {
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.05);
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content {
+            background: rgba(10, 5, 30, 0.95);
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #ff00c8;
+            transform: scale(1.1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.06);
+        }
+
+        .modal-header .icon {
+            font-size: 28px;
+        }
+
+        .modal-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: #e8e8e8;
+        }
+
+        .modal-content label {
+            display: block;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 200, 255, 0.06);
+            border-radius: 8px;
+            color: #e8e8e8;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 14px;
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus,
+        .modal-content select:focus {
+            border-color: rgba(255, 0, 200, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 200, 0.05);
+        }
+
+        .modal-content textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .modal-content select option {
+            background: #0a0a12;
+            color: #e8e8e8;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 200, 255, 0.06);
+        }
+
+        .modal-footer .btn-cancelar {
+            padding: 8px 24px;
+            background: rgba(255, 0, 64, 0.06);
+            border: 1px solid rgba(255, 0, 64, 0.06);
+            border-radius: 8px;
+            color: rgba(255, 0, 64, 0.3);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-footer .btn-cancelar:hover {
+            background: rgba(255, 0, 64, 0.1);
+            color: rgba(255, 0, 64, 0.5);
+        }
+
+        .modal-footer .btn-salvar {
+            padding: 8px 28px;
+            background: linear-gradient(135deg, #ff00c8, #00c8ff);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-footer .btn-salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 0, 200, 0.2);
+        }
+
+        /* ============================================================
+           MENSAGEM DE VÁZIO
+           ============================================================ */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 16px;
+            opacity: 0.2;
+        }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 5, 30, 0.95);
+            border: 1px solid #00c8ff;
+            color: #e8e8e8;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            z-index: 200;
+            transition: all 0.4s ease;
+            opacity: 0;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            bottom: 30px;
+            opacity: 1;
+        }
+
+        /* ============================================================
+           RESPONSIVIDADE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .chamados-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .result-count {
+                text-align: center;
+                margin-left: 0;
+                padding-left: 0;
+            }
+
+            .botoes-acoes {
+                margin-left: 0;
+                justify-content: center;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header h1 {
+                font-size: 1rem;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .chamado-card {
+                padding: 14px 16px;
+            }
+
+            .chamado-card .titulo {
+                font-size: 0.8rem;
+            }
+
+            .chamado-card .descricao {
+                font-size: 0.7rem;
+            }
+
+            .filtros-botoes button {
+                font-size: 0.5rem;
+                padding: 4px 10px;
+            }
+
+            .search-box input {
+                font-size: 0.75rem;
+            }
+
+            .btn-adicionar {
+                font-size: 0.55rem;
+                padding: 4px 12px;
+            }
+
+            .modal-header h2 {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ============================================================
+           SCROLL
+           ============================================================ */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff00c8, #00c8ff);
+            border-radius: 4px;
+        }
+
+        ::selection {
+            background: rgba(255, 0, 200, 0.15);
+            color: #fff;
+        }
+
+        body.light-mode ::selection {
+            background: rgba(212, 0, 138, 0.15);
+            color: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LINHAS RETROWAVE -->
+    <div class="retro-lines"></div>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-box">📋</div>
+            <div>
+                <h1>CHAMADOS <span>JIRA</span></h1>
+                <div class="subtitle">Base de Conhecimento</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="badge-online">
+                <span class="dot"></span>
+                <span>Online</span>
+            </div>
+            <div class="toggle-theme" id="toggleTheme" title="Alternar tema">
+                <span class="thumb" id="themeThumb"></span>
+                <span id="themeLabel">🌙</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    CONTROLES
+    ============================================================ -->
+    <div class="controls">
+        <div class="search-box">
+            <span class="icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Buscar por título, descrição ou tags..." autocomplete="off">
+        </div>
+        <div class="filtros-botoes">
+            <button class="active" data-filtro="todos">Todos</button>
+            <button data-filtro="regra">📌 Regras</button>
+            <button data-filtro="orientacao">📖 Orientações</button>
+            <button data-filtro="cliente">🏢 Cliente</button>
+        </div>
+        <div class="botoes-acoes">
+            <button class="btn-adicionar" id="btnAdicionar">➕ Adicionar</button>
+            <button class="btn-limpar" id="btnLimpar">🗑️ Limpar</button>
+        </div>
+        <span class="result-count" id="resultCount">0 chamados</span>
+    </div>
+
+    <!-- ============================================================
+    GRADE DE CHAMADOS
+    ============================================================ -->
+    <div class="container">
+        <div class="chamados-grid" id="chamadosGrid">
+            <!-- Renderizado via JavaScript -->
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL ADICIONAR/EDITAR
+    ============================================================ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <span class="icon" id="modalIcon">📌</span>
+                <h2 id="modalTitle">Novo Chamado</h2>
+            </div>
+
+            <form id="formChamado">
+                <label for="titulo">Título do Chamado *</label>
+                <input type="text" id="titulo" placeholder="Ex: Regra de negócio - SC" required>
+
+                <label for="link">Link do Jira *</label>
+                <input type="url" id="link" placeholder="https://jira.azi.com.br/browse/..." required>
+
+                <label for="descricao">Descrição / Resumo</label>
+                <textarea id="descricao" placeholder="Breve descrição do que está documentado neste chamado..."></textarea>
+
+                <label for="clienteSelect">Cliente</label>
+                <select id="clienteSelect">
+                    <option value="">Selecione...</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="TCE">Tribunal de Contas</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="TO">Tocantins</option>
+                    <option value="AP">Amapá</option>
+                    <option value="PMCG">PMCG</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="TJMS">TJMS</option>
+                    <option value="DPGE">DPGE</option>
+                    <option value="ALMS">ALMS</option>
+                    <option value="PI">Piauí</option>
+                    <option value="EBT">Embratur</option>
+                </select>
+
+                <label for="tags">Tags (separadas por vírgula)</label>
+                <input type="text" id="tags" placeholder="Ex: regra, negócio, homologação">
+
+                <label for="tipoChamado">Tipo</label>
+                <select id="tipoChamado">
+                    <option value="regra">📌 Regra de Negócio</option>
+                    <option value="orientacao">📖 Orientação</option>
+                    <option value="cliente">🏢 Cliente</option>
+                </select>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
+                    <button type="submit" class="btn-salvar" id="btnSalvar">💾 Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // DADOS INICIAIS (EXEMPLOS)
+        // ============================================================
+        let chamados = [{
+            id: 1,
+            titulo: 'Regra de Negócio - SC - Homologação',
+            link: 'https://jira.azi.com.br/browse/SC-1234',
+            descricao: 'Procedimento para homologação de fornecedores no sistema de Santa Catarina. Inclui validação de documentos e prazos.',
+            cliente: 'SC',
+            tags: ['regra', 'negócio', 'homologação'],
+            tipo: 'regra',
+            data: '2024-01-15'
+        }, {
+            id: 2,
+            titulo: 'Orientação - MS - ARP',
+            link: 'https://jira.azi.com.br/browse/MS-5678',
+            descricao: 'Como criar e gerenciar Atas de Registro de Preços no Mato Grosso do Sul. Passo a passo completo.',
+            cliente: 'MS',
+            tags: ['orientação', 'arp', 'compras'],
+            tipo: 'orientacao',
+            data: '2024-01-20'
+        }, {
+            id: 3,
+            titulo: 'Especificação - TCE - Fluxo de Compras',
+            link: 'https://jira.azi.com.br/browse/TCE-9012',
+            descricao: 'Fluxo completo de compras no Tribunal de Contas, desde a solicitação até o empenho. Inclui integração com SGC.',
+            cliente: 'TCE',
+            tags: ['regra', 'fluxo', 'compras'],
+            tipo: 'regra',
+            data: '2024-02-01'
+        }, {
+            id: 4,
+            titulo: 'Orientações - Embratur - Efornecedor',
+            link: 'https://jira.azi.com.br/browse/EBT-3456',
+            descricao: 'Cadastro e gestão de fornecedores no sistema Efornecedor da Embratur. Inclui troubleshooting comum.',
+            cliente: 'EBT',
+            tags: ['orientação', 'efornecedor', 'cadastro'],
+            tipo: 'orientacao',
+            data: '2024-02-10'
+        }, {
+            id: 5,
+            titulo: 'Regra - PMCG - Compra Direta',
+            link: 'https://jira.azi.com.br/browse/PMCG-7890',
+            descricao: 'Regras para compra direta na PMCG. Valores limites, modalidades e documentação necessária.',
+            cliente: 'PMCG',
+            tags: ['regra', 'compra direta', 'limites'],
+            tipo: 'regra',
+            data: '2024-02-15'
+        }];
+
+        let proximoId = 6;
+
+        // ============================================================
+        // VARIÁVEIS
+        // ============================================================
+        let filtroAtual = 'todos';
+        let buscaAtual = '';
+        let editandoId = null;
+
+        // ============================================================
+        // ELEMENTOS DOM
+        // ============================================================
+        const grid = document.getElementById('chamadosGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filtrosBotoes = document.querySelectorAll('.filtros-botoes button');
+        const resultCount = document.getElementById('resultCount');
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalIcon = document.getElementById('modalIcon');
+
+        const formChamado = document.getElementById('formChamado');
+        const tituloInput = document.getElementById('titulo');
+        const linkInput = document.getElementById('link');
+        const descricaoInput = document.getElementById('descricao');
+        const clienteSelect = document.getElementById('clienteSelect');
+        const tagsInput = document.getElementById('tags');
+        const tipoChamadoSelect = document.getElementById('tipoChamado');
+
+        const btnAdicionar = document.getElementById('btnAdicionar');
+        const btnLimpar = document.getElementById('btnLimpar');
+        const btnCancelar = document.getElementById('btnCancelar');
+
+        const toast = document.getElementById('toast');
+
+        // ============================================================
+        // FUNÇÃO PARA RENDERIZAR OS CHAMADOS
+        // ============================================================
+        function renderizarChamados() {
+            let filtrados = filtroAtual === 'todos' ?
+                chamados :
+                chamados.filter(c => c.tipo === filtroAtual);
+
+            if (buscaAtual.trim() !== '') {
+                const termo = buscaAtual.toLowerCase().trim();
+                filtrados = filtrados.filter(c =>
+                    c.titulo.toLowerCase().includes(termo) ||
+                    c.descricao.toLowerCase().includes(termo) ||
+                    c.tags.some(t => t.toLowerCase().includes(termo)) ||
+                    c.cliente.toLowerCase().includes(termo)
+                );
+            }
+
+            resultCount.textContent = `${filtrados.length} chamado${filtrados.length !== 1 ? 's' : ''}`;
+
+            if (filtrados.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">📭</span>
+                        Nenhum chamado encontrado
+                        <br><span style="font-size:0.7rem;color:rgba(255,255,255,0.03);">Adicione seu primeiro chamado clicando em "Adicionar"</span>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtrados.map(chamado => `
+                <div class="chamado-card" data-id="${chamado.id}">
+                    <div class="topo">
+                        <div class="titulo">${chamado.titulo}</div>
+                        <div class="cliente">${chamado.cliente}</div>
+                    </div>
+                    <div class="descricao">${chamado.descricao || 'Sem descrição'}</div>
+                    <div class="tags">
+                        ${chamado.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </div>
+                    <div class="rodape">
+                        <a href="${chamado.link}" class="link-chamado" target="_blank">
+                            🔗 Acessar Jira
+                        </a>
+                        <div class="acoes">
+                            <button class="btn-editar" onclick="editarChamado(${chamado.id})" title="Editar">✏️</button>
+                            <button class="btn-excluir" onclick="excluirChamado(${chamado.id})" title="Excluir">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="data-criacao">📅 ${chamado.data || 'Sem data'}</div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA ABRIR MODAL (ADICIONAR)
+        // ============================================================
+        function abrirModalAdicionar() {
+            editandoId = null;
+            modalTitle.textContent = 'Novo Chamado';
+            modalIcon.textContent = '📌';
+            formChamado.reset();
+            document.getElementById('btnSalvar').textContent = '💾 Salvar';
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            tituloInput.focus();
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA ABRIR MODAL (EDITAR)
+        // ============================================================
+        function editarChamado(id) {
+            const chamado = chamados.find(c => c.id === id);
+            if (!chamado) return;
+
+            editandoId = id;
+            modalTitle.textContent = 'Editar Chamado';
+            modalIcon.textContent = '✏️';
+            tituloInput.value = chamado.titulo;
+            linkInput.value = chamado.link;
+            descricaoInput.value = chamado.descricao || '';
+            clienteSelect.value = chamado.cliente || '';
+            tagsInput.value = chamado.tags.join(', ');
+            tipoChamadoSelect.value = chamado.tipo || 'regra';
+            document.getElementById('btnSalvar').textContent = '💾 Atualizar';
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            tituloInput.focus();
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA EXCLUIR CHAMADO
+        // ============================================================
+        function excluirChamado(id) {
+            if (!confirm('Tem certeza que deseja excluir este chamado?')) return;
+
+            chamados = chamados.filter(c => c.id !== id);
+            salvarDados();
+            renderizarChamados();
+            mostrarToast('🗑️ Chamado excluído com sucesso!');
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA SALVAR DADOS NO LOCALSTORAGE
+        // ============================================================
+        function salvarDados() {
+            try {
+                localStorage.setItem('chamadosData', JSON.stringify(chamados));
+                localStorage.setItem('chamadosProximoId', JSON.stringify(proximoId));
+            } catch (e) {
+                console.error('Erro ao salvar dados:', e);
+            }
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA CARREGAR DADOS DO LOCALSTORAGE
+        // ============================================================
+        function carregarDados() {
+            try {
+                const data = localStorage.getItem('chamadosData');
+                const idData = localStorage.getItem('chamadosProximoId');
+
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (parsed && parsed.length > 0) {
+                        chamados = parsed;
+                    }
+                }
+                if (idData) {
+                    proximoId = JSON.parse(idData);
+                }
+            } catch (e) {
+                console.error('Erro ao carregar dados:', e);
+            }
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA LIMPAR TODOS OS CHAMADOS
+        // ============================================================
+        function limparTodos() {
+            if (!confirm('⚠️ Tem certeza que deseja excluir TODOS os chamados? Esta ação não pode ser desfeita!')) return;
+
+            chamados = [];
+            salvarDados();
+            renderizarChamados();
+            mostrarToast('🗑️ Todos os chamados foram removidos!');
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA MOSTRAR TOAST
+        // ============================================================
+        let toastTimer;
+
+        function mostrarToast(mensagem) {
+            toast.textContent = mensagem;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ============================================================
+        // EVENTOS - MODAL
+        // ============================================================
+        function fecharModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            editandoId = null;
+        }
+
+        modalClose.addEventListener('click', fecharModal);
+        btnCancelar.addEventListener('click', fecharModal);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // ============================================================
+        // EVENTOS - FORMULÁRIO (SALVAR)
+        // ============================================================
+        formChamado.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const titulo = tituloInput.value.trim();
+            const link = linkInput.value.trim();
+            const descricao = descricaoInput.value.trim();
+            const cliente = clienteSelect.value;
+            const tagsRaw = tagsInput.value.trim();
+            const tipo = tipoChamadoSelect.value;
+
+            if (!titulo || !link) {
+                mostrarToast('⚠️ Preencha o título e o link do chamado!');
+                return;
+            }
+
+            const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(t => t) : [];
+
+            const chamadoData = {
+                titulo,
+                link,
+                descricao,
+                cliente,
+                tags,
+                tipo,
+                data: new Date().toLocaleDateString('pt-BR')
+            };
+
+            if (editandoId !== null) {
+                // EDITAR
+                const index = chamados.findIndex(c => c.id === editandoId);
+                if (index !== -1) {
+                    chamados[index] = { ...chamados[index], ...chamadoData };
+                    mostrarToast('✅ Chamado atualizado com sucesso!');
+                }
+            } else {
+                // ADICIONAR
+                chamados.push({
+                    id: proximoId++,
+                    ...chamadoData
+                });
+                mostrarToast('✅ Chamado adicionado com sucesso!');
+            }
+
+            salvarDados();
+            renderizarChamados();
+            fecharModal();
+        });
+
+        // ============================================================
+        // EVENTOS - BUSCA
+        // ============================================================
+        searchInput.addEventListener('input', function() {
+            buscaAtual = this.value;
+            renderizarChamados();
+        });
+
+        // ============================================================
+        // EVENTOS - FILTROS
+        // ============================================================
+        filtrosBotoes.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filtrosBotoes.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filtroAtual = this.dataset.filtro;
+                renderizarChamados();
+            });
+        });
+
+        // ============================================================
+        // EVENTOS - BOTÕES
+        // ============================================================
+        btnAdicionar.addEventListener('click', abrirModalAdicionar);
+        btnLimpar.addEventListener('click', limparTodos);
+
+        // ============================================================
+        // MODO CLARO/ESCURO
+        // ============================================================
+        const toggleTheme = document.getElementById('toggleTheme');
+        const themeLabel = document.getElementById('themeLabel');
+
+        function toggleModo() {
+            document.body.classList.toggle('light-mode');
+
+            if (document.body.classList.contains('light-mode')) {
+                themeLabel.textContent = '☀️';
+                localStorage.setItem('tema-chamados', 'claro');
+            } else {
+                themeLabel.textContent = '🌙';
+                localStorage.setItem('tema-chamados', 'escuro');
+            }
+        }
+
+        toggleTheme.addEventListener('click', toggleModo);
+
+        const temaSalvo = localStorage.getItem('tema-chamados');
+        if (temaSalvo === 'claro') {
+            document.body.classList.add('light-mode');
+            themeLabel.textContent = '☀️';
+        }
+
+        // ============================================================
+        // INICIAR
+        // ============================================================
+        carregarDados();
+        renderizarChamados();
+
+        console.log('📋 Base de Chamados Jira carregada!');
+        console.log(`📦 ${chamados.length} chamados disponíveis`);
+        console.log('💡 Clique em "Adicionar" para cadastrar um novo chamado');
+        console.log('🔍 Use a busca ou filtros para encontrar chamados');
+    </script>
+
+</body>
+</html>

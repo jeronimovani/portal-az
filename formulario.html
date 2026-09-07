@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario AZ</title>
+    <link rel="stylesheet" href="css/formulario.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <!-- EFEITOS DE FUNDO -->
+    <div class="grid-bg"></div>
+    <div class="scanlines"></div>
+
+    <!-- BARRA LATERAL (SIDEBAR)-->
+    <!-- INDICADOR VISUAL (aparece na borda esquerda) -->
+    <div class="sidebar-indicator"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>MENU</h3>
+            <button class="close-sidebar">✕</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <span class="icon">🏠</span> INÍCIO
+            </a>
+            <a href="modulos.html" target="_blank" class="nav-item">
+                <span class="icon">📦</span> MODULOS
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">📲</span> CONTATOS
+            </a>
+            <hr class="nav-divider">
+            <a href="#" class="nav-item">
+                <span class="icon">⚙️</span> CONFIGURAÇÕES
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">❓</span> AJUDA
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status"></span>
+            <span class="version">2.0.1</span>
+            <div> <span class="made">equipe suporte az</span> </div>
+        </div>
+    </div>
+
+    <!-- POP-UP DE CONTATOS -->
+    <div id="telefone-popup" class="telefone-popup" style="display:none;">
+        <div class="popup-overlay"></div>
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>📋 CONTATOS ÚTEIS</h2>
+                <button class="popup-close" id="fecharTelefone">✕</button>
+            </div>
+
+            <div class="popup-body">
+                <!-- CONTATOS PÚBLICOS (LIBERADOS PARA CLIENTE) -->
+                <div class="telefone-grupo publico">
+                    <h3>🟢 PÚBLICOS (LIBERADOS)</h3>
+                    <p class="grupo-desc">Contatos que podem ser informados ao cliente</p>
+                    <div class="telefone-grid" id="telefones-publicos">
+                        <!-- Contatos serão inseridos via JS -->
+                    </div>
+                </div>
+
+                <!-- CONTATOS RESTRITOS (INTERNOS) -->
+                <div class="telefone-grupo restrito">
+                    <h3>🔴 RESTRITOS (INTERNOS)</h3>
+                    <p class="grupo-desc">Contatos apenas para uso interno da equipe</p>
+                    <div class="telefone-grid" id="telefones-restritos">
+                        <!-- Contatos serão inseridos via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="popup-footer">
+                <button class="btn-cyber btn-fechar" id="fecharTelefoneBtn">FECHAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÃO TOGGLE (só aparece em mobile) -->
+    <button class="menu-toggle">☰</button>
+
+    <!-- FORMULÁRIO -->
+    <div class="cyber-container">
+        <div class="header-form">
+            <h1>ATENDIMENTO</h1>
+            <div class="toggle-theme" id="toggleTheme" title="Alternar tema">
+                <span class="thumb" id="themeThumb"></span>
+                <span id="themeLabel">🌙</span>
+                <span class="theme-badge" id="themeBadge">RETRO</span>
+            </div>
+        </div>
+
+        <form id="formulario">
+            <label for="tipo">>_ TIPO DE USUÁRIO</label>
+            <select id="tipo" required>
+                <option value="" disabled selected>>_ SELECIONE...</option>
+                <option value="fornecedor">FORNECEDOR</option>
+                <option value="servidor">SERVIDOR</option>
+                <option value="usuario">PORTAL & EMAIL</option>
+            </select>
+
+            <label for="nome">>_ NOME COMPLETO</label>
+            <input type="text" id="nome" required placeholder=">_ DIGITE SEU NOME">
+
+            <label for="email">>_ ENDEREÇO DE E-MAIL</label>
+            <input type="email" id="email" required placeholder=">_ USER@DOMAIN.COM">
+
+            <label for="telefone">>_ TELEFONE</label>
+            <input type="text" id="telefone" required placeholder=">_ ___________">
+
+            <label for="processo">>_ NÚMERO DO PROCESSO</label>
+            <input type="text" id="processo" value="NÃO POSSUI">
+
+            <!-- CAMPOS ESPECÍFICOS -->
+            <div id="fornecedor-fields" style="display:none;">
+                <label for="cnpj">>_ CNPJ</label>
+                <input type="text" id="cnpj" placeholder=">__.___.___/____-__">
+
+                <label for="razaoSocial">>_ RAZÃO SOCIAL</label>
+                <input type="text" id="razaoSocial" placeholder=">_ NOME EMPRESARIAL">
+            </div>
+
+            <div id="servidor-fields" style="display:none;">
+                <label for="cpf">>_ CPF</label>
+                <input type="text" id="cpf" placeholder=">______________">
+
+                <label for="orgao">>_ SIGLA DO ÓRGÃO</label>
+                <input type="text" id="orgao" placeholder=">_ SIGLA DO ÓRGÃO">
+            </div>
+
+            <hr class="divider">
+            <label for="modulo">>_ MÓDULO</label>
+            <select id="modulo" required>
+                <option value="" disabled selected>>_ SELECIONE...</option>
+                <optgroup label="Meus">
+                    <option value="efornecedor">EFORNECEDOR</option>
+                    <option value="catalogo">CATÁLOGO</option>
+                    <option value="compras">COMPRAS PREPARAÇÃO</option>
+                    <option value="sgc">COMPRAS - SGC</option>
+                    <option value="direta">COMPRA DIRETA</option>
+                    <option value="licitacao">LICITAÇÃO</option>
+                    <option value="pca">PLANO DE COMPRAS</option>
+                    <option value="arp">ATA DE REGISTRO DE PREÇOS</option>
+                    <option value="irp">INTENÇÃO DE REGISTO DE PREÇOS</option>
+                    <option value="flowbee">FLOWBEE</option>
+                    <option value="setup">SETUP</option>
+                </optgroup>
+            </select>
+
+            <label for="assunto">>_ ASSUNTO</label>
+            <input type="text" id="assunto" placeholder=">_ DESCREVA O ASSUNTO">
+
+            <label for="textoAssunto">>_ TEXTO DO ASSUNTO</label>
+            <textarea id="textoAssunto" maxlength="500" placeholder=">_ DIGITE SUA MENSAGEM..."></textarea>
+            <p id="contador">0/500 CARACTERES</p>
+
+            <div class="button-group">
+                <button type="button" id="gerarTexto">GERAR</button>
+                <button type="button" id="copiarLimpar">FINALIZAR</button>
+            </div>
+
+            <textarea id="resultado" readonly></textarea>
+
+            <button id="btn-historico" type="button">📋 HISTÓRICO</button>
+        </form>
+
+        <!-- HISTÓRICO DE TEXTO -->
+        <div id="historico-container">
+            <h3>HISTÓRICO DE TEXTOS</h3>
+            <div id="historico-lista"></div>
+        </div>
+    </div>
+
+    <div id="toast">TEXTO COPIADO PARA ÁREA DE TRANSFERÊNCIA!</div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="js/formulario.js"></script>
+</body>
+
+</html>

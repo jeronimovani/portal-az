@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulos AZ - Dashboard</title>
+    <link rel="stylesheet" href="css/modulos.css">
+</head>
+<body>
+    
+    <!-- LINHAS RETROWAVE -->
+    <div class="retro-lines"></div>
+
+    <!-- ============================================================
+    MENU DE NAVEGAÇÃO (SIDEBAR STYLE)
+    ============================================================ -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">AZ</span>
+                <span class="brand-text">SUPORTE AZ</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-label">Início</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="modulos.html" class="nav-link active">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Módulos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#telefone-popup" class="nav-link" id="navContatos">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-label">Contatos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-label">Configurações</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-footer">
+                <span class="nav-status"></span>
+                <span class="nav-version">v2.0.1</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    CONTEÚDO PRINCIPAL
+    ============================================================ -->
+    <div class="main-content">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="logo-box">AZ</div>
+                <div>
+                    <h1>MÓDULOS <span>AZ</span></h1>
+                    <div class="subtitle">Dashboard de Acessos</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="badge-online">
+                    <span class="dot"></span>
+                    <span>Online</span>
+                </div>
+                <!-- BOTÃO DE MODO RETRO/AZ -->
+                <div class="toggle-theme" id="toggleTheme" title="Alternar tema">
+                    <span class="thumb" id="themeThumb"></span>
+                    <span id="themeLabel">🌙</span>
+                    <span class="theme-badge" id="themeBadge">RETRO</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTROLES (BUSCA + FILTROS) -->
+        <div class="controls">
+            <div class="search-box">
+                <span class="icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Buscar módulo..." autocomplete="off">
+            </div>
+            <div class="filtros-botoes">
+                <button class="active" data-filtro="todos">Todos</button>
+                <button data-filtro="producao">⚡ Produção</button>
+                <button data-filtro="homologacao">🧪 Homologação</button>
+                <button data-filtro="links">🔗 Links</button>
+            </div>
+            <span class="result-count" id="resultCount">0 módulos</span>
+        </div>
+
+        <!-- GRADE DE MÓDULOS -->
+        <div class="container">
+            <div class="modulos-grid" id="modulosGrid">
+                <!-- Renderizado via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL DE DETALHES
+    ============================================================ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <span class="icon" id="modalIcon">🏖️</span>
+                <div class="info">
+                    <div class="nome" id="modalNome">Santa Catarina</div>
+                    <div class="sigla" id="modalSigla">SC</div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="sistemas" id="modalSistemas">
+                    <!-- Renderizado via JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-fechar" id="modalCloseBtn">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/modulos.js"></script>
+</body>
+</html>
