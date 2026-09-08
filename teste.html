@@ -3,58 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Teste Supabase</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <h1>🔄 Teste Supabase</h1>
-    <div id="status">Conectando...</div>
-    <div id="dados"></div>
+    <h1>🔍 Teste Supabase</h1>
+    <div id="log"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
     <script>
         // ============================================================
-        // SUBSTITUA PELAS SUAS CREDENCIAIS!
+        // 🔴 SUBSTITUA PELAS SUAS CREDENCIAIS!
         // ============================================================
         const SUPABASE_URL = 'https://muzqekuyafbqvogdulvj.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11enFla3V5YWZicXZvZ2R1bHZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MjMyNDEsImV4cCI6MjEwNDM5OTI0MX0.TVvfTS8h7C0PofhHNKZKIsqUezMidza44r5qewP9VyA';
 
-        // Criar cliente
-        const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const log = document.getElementById('log');
 
-        async function testar() {
-            const status = document.getElementById('status');
-            const dados = document.getElementById('dados');
-
-            try {
-                // 1. Testar conexão com banco
-                const { data: modulos, error } = await supabase
-                    .from('modulos')
-                    .select('*');
-
-                if (error) throw error;
-
-                status.innerHTML = '✅ Conectado com sucesso!';
-                dados.innerHTML = `<pre>${JSON.stringify(modulos, null, 2)}</pre>`;
-
-                // 2. Testar login
-                console.log('🔑 Tentando login...');
-                const { data: auth, error: authError } = await supabase.auth.signInWithPassword({
-                    email: 'vani.saiefert@gmail.com',
-                    password: 'Portal123'
-                });
-
-                if (authError) {
-                    console.error('❌ Erro no login:', authError);
-                } else {
-                    console.log('✅ Login realizado!', auth);
-                }
-
-            } catch (err) {
-                status.innerHTML = '❌ Erro: ' + err.message;
-                console.error(err);
-            }
+        function addLog(msg, isError = false) {
+            const p = document.createElement('p');
+            p.textContent = msg;
+            p.style.color = isError ? 'red' : 'green';
+            p.style.fontFamily = 'monospace';
+            log.appendChild(p);
+            console.log(msg);
         }
 
-        testar();
+        addLog('🚀 Iniciando teste...');
+
+        // Verificar se a biblioteca carregou
+        if (typeof supabaseJs === 'undefined') {
+            addLog('❌ Biblioteca Supabase não carregou! Verifique a internet.', true);
+        } else {
+            addLog('✅ Biblioteca Supabase carregada!');
+
+            // Criar cliente
+            try {
+                const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                addLog('✅ Cliente criado!');
+
+                // Testar conexão
+                addLog('📡 Tentando buscar módulos...');
+
+                supabase
+                    .from('modulos')
+                    .select('*')
+                    .then(({ data, error }) => {
+                        if (error) {
+                            addLog('❌ Erro na consulta: ' + error.message, true);
+                            addLog('📋 Detalhes:', true);
+                            addLog(JSON.stringify(error, null, 2), true);
+                            return;
+                        }
+                        addLog('✅ Dados obtidos!');
+                        addLog('📦 Módulos encontrados: ' + (data?.length || 0));
+                        if (data && data.length > 0) {
+                            data.forEach(m => {
+                                addLog(`  • ${m.icon || '📦'} ${m.nome} (${m.sigla})`);
+                            });
+                        }
+                    });
+
+                // Testar autenticação
+                addLog('🔑 Testando autenticação...');
+                supabase.auth.signInWithPassword({
+                    email: 'teste@email.com',
+                    password: 'Teste@123'
+                }).then(({ data, error }) => {
+                    if (error) {
+                        addLog('❌ Erro no login: ' + error.message, true);
+                        return;
+                    }
+                    addLog('✅ Login realizado! Usuário: ' + data.user.email);
+                });
+
+            } catch (err) {
+                addLog('❌ Erro ao criar cliente: ' + err.message, true);
+            }
+        }
     </script>
 </body>
 </html>
