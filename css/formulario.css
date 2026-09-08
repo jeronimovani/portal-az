@@ -846,9 +846,8 @@ button:hover::before {
 
 /************************ FIM DO CSS barra lateral */
 
-
 /* ============================
-   POP-UP DE CONTATOS
+   POP-UP DE CONTATOS - VERSÃO ATUALIZADA
    ============================ */
 
 .telefone-popup {
@@ -870,58 +869,84 @@ button:hover::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(12px);
     transition: background 0.4s ease;
 }
 
+/* ============================================================
+   POPUP CONTENT - MAIOR
+   ============================================================ */
 .popup-content {
     position: relative;
-    background: rgba(10, 5, 30, 0.95);
+    background: rgba(10, 5, 30, 0.97);
     border: 2px solid #00f0ff;
-    box-shadow: 0 0 50px rgba(0, 240, 255, 0.3), inset 0 0 50px rgba(0, 240, 255, 0.05);
-    padding: 30px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 85vh;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.25), inset 0 0 60px rgba(0, 240, 255, 0.04);
+    padding: 40px 38px 30px;
+    width: 94%;
+    max-width: 960px;
+    max-height: 88vh;
     overflow-y: auto;
     z-index: 1;
     animation: popupIn 0.3s ease;
     transition: all 0.4s ease;
+    border-radius: 18px;
 }
 
 @keyframes popupIn {
     from {
-        transform: scale(0.9) translateY(20px);
+        transform: scale(0.92) translateY(25px);
         opacity: 0;
     }
-
     to {
         transform: scale(1) translateY(0);
         opacity: 1;
     }
 }
 
-/* HEADER DO POP-UP */
+/* ============================================================
+   SCROLLBAR DO POPUP
+   ============================================================ */
+.popup-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.popup-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 20, 0.3);
+    border-radius: 10px;
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff00f0, #00f0ff);
+    border-radius: 10px;
+}
+
+/* ============================================================
+   HEADER DO POP-UP
+   ============================================================ */
 .popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 22px;
+    margin-bottom: 28px;
     transition: border-color 0.4s ease;
 }
 
-    .popup-header h2 {
-        font-family: 'Press Start 2P', cursive;
-        color: #00f0ff;
-        font-size: 1.2rem;
-        text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-        margin: 0;
-        transition: color 0.4s ease, text-shadow 0.4s ease;
-    }
+.popup-header h2 {
+    font-family: 'Press Start 2P', cursive;
+    color: #00f0ff;
+    font-size: 1.5rem;
+    text-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+    margin: 0;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+    letter-spacing: 1px;
+}
 
+/* ============================================================
+   BOTÃO FECHAR (X) - PADRÃO RETRO
+   ============================================================ */
 .popup-close {
     background: none;
     border: none;
@@ -937,236 +962,571 @@ button:hover::before {
         color: #00f0ff;
     }
 
-/* BODY */
+/* ============================================================
+   BODY DO POP-UP
+   ============================================================ */
 .popup-body {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 32px;
 }
 
-/* GRUPOS DE CONTATOS */
+/* ============================================================
+   GRUPOS DE CONTATOS
+   ============================================================ */
 .telefone-grupo {
-    background: rgba(0, 0, 20, 0.5);
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    padding: 20px;
-    border-radius: 4px;
+    background: rgba(0, 0, 20, 0.45);
+    border: 1px solid rgba(0, 240, 255, 0.08);
+    padding: 26px 26px 22px;
+    border-radius: 10px;
     transition: all 0.4s ease;
 }
 
-    .telefone-grupo.publico {
-        border-left: 4px solid #00ff41;
-    }
+.telefone-grupo.publico {
+    border-left: 5px solid #00ff41;
+}
 
-    .telefone-grupo.restrito {
-        border-left: 4px solid #ff0040;
-    }
+.telefone-grupo.restrito {
+    border-left: 5px solid #ff0040;
+}
 
-    .telefone-grupo h3 {
-        font-family: 'Courier New', monospace;
-        font-size: 0.95rem;
-        margin: 0 0 5px 0;
-        letter-spacing: 1px;
-        transition: color 0.4s ease;
-    }
-
-    .telefone-grupo.publico h3 {
-        color: #00ff41;
-        text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    }
-
-    .telefone-grupo.restrito h3 {
-        color: #ff0040;
-        text-shadow: 0 0 10px rgba(255, 0, 64, 0.3);
-    }
-
-.grupo-desc {
-    color: rgba(0, 240, 255, 0.7);
-    font-size: 0.7rem;
-    margin: 0 0 15px 0;
-    font-style: italic;
+.telefone-grupo h3 {
+    font-family: 'Courier New', monospace;
+    font-size: 1.15rem;
+    margin: 0 0 4px 0;
+    letter-spacing: 1px;
     transition: color 0.4s ease;
 }
 
-/* GRID DE CONTATOS */
-.telefone-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
+.telefone-grupo.publico h3 {
+    color: #00ff41;
+    text-shadow: 0 0 12px rgba(0, 255, 65, 0.25);
 }
 
-/* CARD DE CONTATO */
+.telefone-grupo.restrito h3 {
+    color: #ff0040;
+    text-shadow: 0 0 12px rgba(255, 0, 64, 0.25);
+}
+
+.grupo-desc {
+    color: rgba(0, 240, 255, 0.4);
+    font-size: 0.75rem;
+    margin: 0 0 22px 0;
+    font-style: italic;
+    transition: color 0.4s ease;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   GRID DE CONTATOS - 2 COLUNAS FIXAS
+   ============================================================ */
+.telefone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+/* ============================================================
+   CARD DE CONTATO - MAIOR E MAIS ESPAÇADO
+   ============================================================ */
 .telefone-card {
-    background: rgba(0, 0, 20, 0.7);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    padding: 12px 15px;
-    border-radius: 4px;
+    background: rgba(0, 0, 20, 0.65);
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    padding: 20px 22px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: default;
     position: relative;
+    min-height: 90px;
+    gap: 14px;
 }
 
-    .telefone-card:hover {
-        border-color: #00f0ff;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(0, 240, 255, 0.15);
-    }
+.telefone-card:hover {
+    border-color: rgba(0, 240, 255, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.08);
+    background: rgba(0, 0, 20, 0.8);
+}
 
-    .telefone-card.publico {
-        border-left: 3px solid #00ff41;
-    }
+.telefone-card.publico {
+    border-left: 4px solid #00ff41;
+}
 
-    .telefone-card.restrito {
-        border-left: 3px solid #ff0040;
-    }
+.telefone-card.restrito {
+    border-left: 4px solid #ff0040;
+}
 
-    .telefone-card .telefone-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        flex: 1;
-    }
+/* ============================================================
+   INFORMAÇÕES DO CONTATO - NOVA ESTRUTURA
+   ============================================================ */
+.telefone-card .telefone-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
 
-    .telefone-card .telefone-nome {
-        color: #00f0ff;
-        font-size: 0.85rem;
-        font-weight: bold;
-        transition: color 0.4s ease;
-    }
+/* HEADER DO CONTATO (NOME + ÍCONES AO LADO) */
+.telefone-card .telefone-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
 
-    .telefone-card .telefone-numero {
-        color: rgba(0, 240, 255, 0.7);
-        font-size: 0.9rem;
-        font-family: 'Courier New', monospace;
-        transition: color 0.4s ease;
-    }
+.telefone-card .telefone-nome {
+    color: #00f0ff;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.4s ease;
+    letter-spacing: 0.3px;
+}
 
-    .telefone-card .telefone-ramal {
-        color: rgba(0, 240, 255, 0.4);
-        font-size: 0.7rem;
-        transition: color 0.4s ease;
-    }
+/* ============================================================
+   BOTÕES DE CÓPIA (ÍCONES AO LADO DO NOME)
+   ============================================================ */
+.telefone-card .btn-copiar-telefone,
+.telefone-card .btn-copiar-email {
+    background: none;
+    border: none;
+    color: rgba(0, 240, 255, 0.25);
+    cursor: pointer;
+    font-size: 15px;
+    padding: 4px 5px;
+    margin: 0 px;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    position: relative;
+}
 
-    .telefone-card .telefone-email {
-        color: rgba(0, 240, 255, 0.6);
-        font-size: 0.8rem;
-        font-family: 'Courier New', monospace;
-        margin-top: 2px;
-        transition: color 0.4s ease;
-    }
+.telefone-card .btn-copiar-telefone:hover,
+.telefone-card .btn-copiar-email:hover {
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.06);
+    transform: scale(0.6, 1);
+}
 
-    .telefone-card .contato-acoes {
-        display: flex;
-        gap: 5px;
-        flex-shrink: 0;
-        margin-left: 10px;
-    }
+.telefone-card .btn-copiar-telefone:active,
+.telefone-card .btn-copiar-email:active {
+    transform: scale(0.80);
+}
 
-    .telefone-card .btn-copiar {
-        background: none;
-        border: none;
-        color: rgba(0, 240, 255, 0.4);
-        cursor: pointer;
-        font-size: 16px;
-        padding: 5px 8px;
-        transition: all 0.3s;
-        border-radius: 4px;
-        flex-shrink: 0;
-    }
+/* ============================================================
+   DADOS DO CONTATO (TEXTO PURO)
+   ============================================================ */
+.telefone-card .telefone-numero {
+    color: rgba(0, 240, 255, 0.7);
+    font-size: 0.95rem;
+    font-family: 'Courier New', monospace;
+    transition: color 0.4s ease;
+}
 
-        .telefone-card .btn-copiar:hover {
-            color: #00f0ff;
-            background: rgba(0, 240, 255, 0.1);
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-        }
+.telefone-card .telefone-ramal {
+    color: rgba(0, 240, 255, 0.4);
+    font-size: 0.75rem;
+    transition: color 0.4s ease;
+}
 
-        .telefone-card .btn-copiar:active {
-            transform: scale(0.8);
-        }
+.telefone-card .telefone-email {
+    color: rgba(0, 240, 255, 0.55);
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+    margin-top: 1px;
+    transition: color 0.4s ease;
+}
 
-    /* TOAST DE COPIA NO CARD */
-    .telefone-card .copiado-toast {
-        position: absolute;
-        top: -30px;
-        right: 10px;
-        background: rgba(0, 240, 255, 0.9);
-        color: #0a0a12;
-        padding: 4px 12px;
-        font-size: 0.6rem;
-        font-family: 'Courier New', monospace;
-        border-radius: 4px;
-        opacity: 0;
-        transition: all 0.3s;
-        pointer-events: none;
-    }
+/* ============================================================
+   TOAST DE COPIA
+   ============================================================ */
+.telefone-card .copiado-toast {
+    position: absolute;
+    top: -42px;
+    right: 12px;
+    background: rgba(0, 240, 255, 0.92);
+    color: #0a0a12;
+    padding: 6px 18px;
+    font-size: 0.7rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    border-radius: 6px;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.25);
+    letter-spacing: 0.5px;
+}
 
-        .telefone-card .copiado-toast.show {
-            opacity: 1;
-            top: -35px;
-        }
+.telefone-card .copiado-toast.show {
+    opacity: 1;
+    top: -48px;
+}
 
-/* FOOTER */
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .popup-footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(0, 240, 255, 0.15);
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
     transition: border-color 0.4s ease;
 }
 
 .btn-fechar {
-    padding: 10px 30px;
-    background: rgba(255, 0, 64, 0.2);
-    border: 1px solid #ff0040;
-    color: #ff0040;
+    padding: 14px 42px;
+    background: rgba(255, 0, 64, 0.12);
+    border: 1px solid rgba(255, 0, 64, 0.15);
+    color: rgba(255, 0, 64, 0.5);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.7rem;
     cursor: pointer;
     transition: all 0.3s;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
 }
 
-    .btn-fechar:hover {
-        background: rgba(255, 0, 64, 0.3);
-        box-shadow: 0 0 20px rgba(255, 0, 64, 0.3);
-    }
+.btn-fechar:hover {
+    background: rgba(255, 0, 64, 0.18);
+    box-shadow: 0 0 30px rgba(255, 0, 64, 0.1);
+    color: rgba(255, 0, 64, 0.7);
+    transform: translateY(-2px);
+}
 
-/* TELEFONE VAZIO */
+/* ============================================================
+   CONTATO VAZIO
+   ============================================================ */
 .telefone-vazio {
-    color: rgba(0, 240, 255, 0.3);
+    color: rgba(0, 240, 255, 0.2);
     text-align: center;
-    padding: 20px;
+    padding: 40px 20px;
     font-style: italic;
     grid-column: 1 / -1;
+    font-size: 0.9rem;
     transition: color 0.4s ease;
 }
 
-/* RESPONSIVIDADE */
+/* ============================================================
+   MODO AZ - POP-UP CONTATOS
+   ============================================================ */
+body.az-mode .popup-overlay {
+    background: rgba(8, 18, 28, 0.92);
+}
+
+body.az-mode .popup-content {
+    background: rgba(12, 30, 45, 0.97);
+    border-color: #2a5a7a;
+    box-shadow: 0 0 60px rgba(24, 61, 87, 0.25), inset 0 0 60px rgba(24, 61, 87, 0.04);
+}
+
+body.az-mode .popup-header {
+    border-bottom-color: rgba(42, 90, 122, 0.25);
+}
+
+body.az-mode .popup-header h2 {
+    color: #d4e8f0;
+    text-shadow: 0 0 25px rgba(24, 61, 87, 0.2);
+}
+
+body.az-mode .popup-close {
+    color: #d4e8f0 !important;
+    text-shadow: 0 0 10px rgba(180, 210, 220, 0.15) !important;
+}
+
+body.az-mode .popup-close:hover {
+    color: #EA4F23 !important;
+    text-shadow: 0 0 20px rgba(234, 79, 35, 0.3) !important;
+    transform: scale(0.6, 1) !important;
+}
+
+body.az-mode .telefone-grupo {
+    background: rgba(10, 25, 40, 0.5);
+    border-color: rgba(42, 90, 122, 0.1);
+}
+
+body.az-mode .telefone-grupo.publico {
+    border-left-color: #2a7a5a;
+}
+
+body.az-mode .telefone-grupo.restrito {
+    border-left-color: #EA4F23;
+}
+
+body.az-mode .telefone-grupo.publico h3 {
+    color: #4adba0;
+    text-shadow: 0 0 12px rgba(74, 219, 160, 0.15);
+}
+
+body.az-mode .telefone-grupo.restrito h3 {
+    color: #EA4F23;
+    text-shadow: 0 0 12px rgba(234, 79, 35, 0.15);
+}
+
+body.az-mode .grupo-desc {
+    color: rgba(180, 210, 220, 0.35);
+}
+
+body.az-mode .telefone-card {
+    background: rgba(10, 25, 40, 0.65);
+    border-color: rgba(42, 90, 122, 0.12);
+}
+
+body.az-mode .telefone-card:hover {
+    border-color: rgba(42, 90, 122, 0.3);
+    background: rgba(10, 25, 40, 0.85);
+    box-shadow: 0 10px 30px rgba(24, 61, 87, 0.12);
+}
+
+body.az-mode .telefone-card .telefone-nome {
+    color: #d4e8f0;
+}
+
+body.az-mode .telefone-card .telefone-numero {
+    color: rgba(180, 210, 220, 0.7);
+}
+
+body.az-mode .telefone-card .telefone-ramal {
+    color: rgba(180, 210, 220, 0.35);
+}
+
+body.az-mode .telefone-card .telefone-email {
+    color: rgba(180, 210, 220, 0.45);
+}
+
+body.az-mode .telefone-card .btn-copiar-telefone,
+body.az-mode .telefone-card .btn-copiar-email {
+    color: rgba(180, 210, 220, 0.25);
+}
+
+body.az-mode .telefone-card .btn-copiar-telefone:hover,
+body.az-mode .telefone-card .btn-copiar-email:hover {
+    color: #EA4F23;
+    background: rgba(234, 79, 35, 0.06);
+}
+
+body.az-mode .telefone-card .copiado-toast {
+    background: #EA4F23;
+    color: #0f1a24;
+    box-shadow: 0 4px 15px rgba(234, 79, 35, 0.2);
+}
+
+body.az-mode .btn-fechar {
+    background: rgba(234, 79, 35, 0.08);
+    border-color: rgba(234, 79, 35, 0.12);
+    color: rgba(234, 79, 35, 0.4);
+}
+
+body.az-mode .btn-fechar:hover {
+    background: rgba(234, 79, 35, 0.12);
+    box-shadow: 0 0 30px rgba(234, 79, 35, 0.06);
+    color: rgba(234, 79, 35, 0.6);
+}
+
+body.az-mode .telefone-vazio {
+    color: rgba(180, 210, 220, 0.15);
+}
+
+body.az-mode .popup-footer {
+    border-top-color: rgba(42, 90, 122, 0.12);
+}
+
+/* ============================================================
+   SCROLLBAR MODO AZ
+   ============================================================ */
+body.az-mode .popup-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #EA4F23, #2a5a7a);
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+@media (max-width: 820px) {
+    .popup-content {
+        padding: 30px 24px 22px;
+        max-width: 98%;
+        max-height: 92vh;
+    }
+
+    .telefone-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    .popup-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .telefone-card {
+        padding: 16px 18px;
+        min-height: 80px;
+        flex-wrap: wrap;
+    }
+
+    .telefone-card .telefone-header {
+        flex-wrap: wrap;
+    }
+
+    .telefone-card .btn-copiar-telefone,
+    .telefone-card .btn-copiar-email {
+        font-size: 15px;
+        padding: 2px 4px;
+    }
+
+    .telefone-grupo {
+        padding: 20px 18px 16px;
+    }
+
+    .telefone-grupo h3 {
+        font-size: 1rem;
+    }
+
+    .popup-close {
+        font-size: 24px !important;
+        padding: 0 8px !important;
+    }
+
+    .btn-fechar {
+        padding: 12px 30px;
+        font-size: 0.6rem;
+    }
+}
+
 @media (max-width: 600px) {
     .popup-content {
-        padding: 15px;
-        max-height: 90vh;
+        padding: 20px 16px 16px;
+        border-radius: 12px;
     }
 
     .telefone-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .popup-header h2 {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
-    .telefone-card .contato-acoes {
-        flex-direction: column;
-        gap: 3px;
+    .telefone-card {
+        padding: 14px 16px;
+        min-height: 70px;
+        flex-wrap: wrap;
     }
 
-    .telefone-card .btn-copiar {
+    .telefone-card .telefone-nome {
+        font-size: 0.85rem;
+    }
+
+    .telefone-card .telefone-numero {
+        font-size: 0.8rem;
+    }
+
+    .telefone-card .telefone-email {
+        font-size: 0.7rem;
+    }
+
+    .telefone-card .btn-copiar-telefone,
+    .telefone-card .btn-copiar-email {
         font-size: 14px;
-        padding: 3px 6px;
+        padding: 2px 3px;
+    }
+
+    .telefone-grupo {
+        padding: 16px 14px 12px;
+    }
+
+    .telefone-grupo h3 {
+        font-size: 0.85rem;
+    }
+
+    .grupo-desc {
+        font-size: 0.6rem;
+        margin-bottom: 14px;
+    }
+
+    .popup-close {
+        font-size: 20px !important;
+        padding: 0 6px !important;
+    }
+
+    .btn-fechar {
+        padding: 10px 24px;
+        font-size: 0.55rem;
+    }
+
+    .telefone-card .copiado-toast {
+        font-size: 0.6rem;
+        padding: 4px 14px;
+        top: -36px;
+        right: 8px;
+    }
+
+    .telefone-card .copiado-toast.show {
+        top: -40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .popup-content {
+        padding: 14px 12px 12px;
+        border-radius: 10px;
+        max-height: 95vh;
+    }
+
+    .popup-header {
+        padding-bottom: 14px;
+        margin-bottom: 18px;
+    }
+
+    .popup-header h2 {
+        font-size: 0.75rem;
+    }
+
+    .telefone-card {
+        padding: 12px 12px;
+        min-height: 60px;
+        border-radius: 6px;
+    }
+
+    .telefone-card .telefone-nome {
+        font-size: 0.75rem;
+    }
+
+    .telefone-card .telefone-numero {
+        font-size: 0.7rem;
+    }
+
+    .telefone-card .btn-copiar-telefone,
+    .telefone-card .btn-copiar-email {
+        font-size: 12px;
+        padding: 1px 2px;
+    }
+
+    .telefone-grupo {
+        padding: 12px 10px 10px;
+        border-radius: 6px;
+    }
+
+    .telefone-grupo h3 {
+        font-size: 0.7rem;
+    }
+
+    .btn-fechar {
+        padding: 8px 18px;
+        font-size: 0.5rem;
+    }
+
+    .popup-close {
+        font-size: 18px !important;
     }
 }
 
@@ -1550,11 +1910,13 @@ body.az-mode .telefone-card .telefone-email {
     color: rgba(180, 210, 220, 0.5);
 }
 
-body.az-mode .telefone-card .btn-copiar {
+body.az-mode .telefone-card .btn-copiar-telefone,
+body.az-mode .telefone-card .btn-copiar-email {
     color: rgba(180, 210, 220, 0.3);
 }
 
-body.az-mode .telefone-card .btn-copiar:hover {
+body.az-mode .telefone-card .btn-copiar-telefone:hover,
+body.az-mode .telefone-card .btn-copiar-email:hover {
     color: #EA4F23;
     background: rgba(234, 79, 35, 0.08);
 }

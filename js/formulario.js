@@ -114,7 +114,6 @@ $(document).ready(function () {
             }
         });
     });
-
     // ============================
     // SISTEMA DE CONTATOS - POP-UP (CONSULTA E CÓPIA)
     // ============================
@@ -124,22 +123,22 @@ $(document).ready(function () {
         publicos: [
             { id: 1, nome: 'Ativos AZ', telefone: '(67) 3303-2708', ramal: '', email: 'servicecenter@azi.com.br' },
             { id: 2, nome: 'Compras AZ', telefone: '(67) 3303-2710', ramal: '', email: 'suportesiga@azi.com.br' },
-            { id: 2, nome: 'Compras BR', telefone: '(67) 3303-2740', ramal: '', email: 'suporte@comprasbr.com.br' },
-            { id: 3, nome: 'Suporte SIADES', telefone: '0800-370-0114', ramal: '', email: 'suportesiades@azi.com.br' },
-            { id: 4, nome: 'Suporte PB', telefone: '0800 370 0098', ramal: '', email: 'suporte.pb@azi.com.br' },
-            { id: 5, nome: 'Fornecedores - SIADES', telefone: '', ramal: '', email: 'cadastro.fornecedores@seger.es.gov.br' },
-            { id: 6, nome: 'Fornecedores - PB', telefone: '(83) 3208-9838', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
-            { id: 7, nome: 'Fornecedores - MS', telefone: '(67) 3218-1323/1383', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
-            { id: 8, nome: 'Fornecedores - PMCG', telefone: '(67) 3314-3267', ramal: '2502', email: 'gecaf.supel@selc.campogrande.ms.gov.br'},
-            { id: 9, nome: 'Fornecedores - MT', telefone: '(65) 9 8432-0112', ramal: '', email: 'fornecedores@seplag.mt.gov.br'},
+            { id: 3, nome: 'Compras BR', telefone: '(67) 3303-2740', ramal: '', email: 'suporte@comprasbr.com.br' },
+            { id: 4, nome: 'Suporte SIADES', telefone: '0800-370-0114', ramal: '', email: 'suportesiades@azi.com.br' },
+            { id: 5, nome: 'Suporte PB', telefone: '0800 370 0098', ramal: '', email: 'suporte.pb@azi.com.br' },
+            { id: 6, nome: 'Fornecedores - SIADES', telefone: '', ramal: '', email: 'cadastro.fornecedores@seger.es.gov.br' },
+            { id: 7, nome: 'Fornecedores - PB', telefone: '(83) 3208-9838', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
+            { id: 8, nome: 'Fornecedores - MS', telefone: '(67) 3218-1323/1383', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
+            { id: 9, nome: 'Fornecedores - PMCG', telefone: '(67) 3314-3267', ramal: '2502', email: 'gecaf.supel@selc.campogrande.ms.gov.br' },
+            { id: 10, nome: 'Fornecedores - MT', telefone: '(65) 9 8432-0112', ramal: '', email: 'fornecedores@seplag.mt.gov.br' },
         ],
         restritos: [
-            { id: 10, nome: 'GEPLAN - ES', telefone: '02736365262', ramal: '', email: 'catalogo.siades@seger.es.gov.br' },
-            { id: 11, nome: 'SUCAF - ES', telefone: '02736365261', ramal: '', email: '' },
-            { id: 12, nome: 'GESIS - ES', telefone: '02736365264', ramal: '', email: '' },
-            { id: 13, nome: 'NECCV SESA - ES', telefone: '0273347572', ramal: '', email: '' },
-            { id: 14, nome: 'CATALOGO - MS', telefone: '06733181322', ramal: '', email: '' },
-            { id: 15, nome: 'SAD - MS', telefone: '06733181479', ramal: '', email: 'suprimentos@sad.ms.gov.br' },
+            { id: 11, nome: 'GEPLAN - ES', telefone: '02736365262', ramal: '', email: 'catalogo.siades@seger.es.gov.br' },
+            { id: 12, nome: 'SUCAF - ES', telefone: '02736365261', ramal: '', email: '' },
+            { id: 13, nome: 'GESIS - ES', telefone: '02736365264', ramal: '', email: '' },
+            { id: 14, nome: 'NECCV SESA - ES', telefone: '0273347572', ramal: '', email: '' },
+            { id: 15, nome: 'CATALOGO - MS', telefone: '06733181322', ramal: '', email: '' },
+            { id: 16, nome: 'SAD - MS', telefone: '06733181479', ramal: '', email: 'suprimentos@sad.ms.gov.br' },
         ]
     };
 
@@ -173,7 +172,7 @@ $(document).ready(function () {
     }
 
     // ============================
-    // CRIAR CARD DE CONTATO (COM TELEFONE E E-MAIL)
+    // CRIAR CARD DE CONTATO (ÍCONES AO LADO DO NOME)
     // ============================
     function criarCardContato(contato, tipo) {
         const div = document.createElement('div');
@@ -190,55 +189,62 @@ $(document).ready(function () {
         toast.textContent = '📋 COPIADO!';
         div.appendChild(toast);
 
+        // Montar os textos para cópia (separados para cada ícone)
+        let textoTelefone = `${numeroFormatado}`;
+        if (contato.ramal) {
+            textoTelefone += ` (Ramal: ${contato.ramal})`;
+        }
+        let textoEmail = `${emailTexto}`;
+
         div.innerHTML += `
         <div class="telefone-info">
-            <span class="telefone-nome">${contato.nome}</span>
-            <span class="telefone-numero">📞 ${numeroFormatado}</span>
-            ${ramalTexto ? `<span class="telefone-ramal">📌 ${ramalTexto}</span>` : ''}
-            ${emailTexto ? `<span class="telefone-email">✉️ ${emailTexto}</span>` : ''}
-        </div>
-        <div class="contato-acoes">
-            <button class="btn-copiar" data-tipo="telefone" title="Copiar telefone">📞</button>
-            ${emailTexto ? `<button class="btn-copiar" data-tipo="email" title="Copiar e-mail">✉️</button>` : ''}
+            <div class="telefone-header">
+                <span class="telefone-nome">${contato.nome}</span>
+                ${numeroFormatado !== 'NÃO INFORMADO' ? `<button class="btn-copiar-telefone" title="Copiar telefone">📞</button>` : ''}
+                ${emailTexto ? `<button class="btn-copiar-email" title="Copiar e-mail">✉️</button>` : ''}
+            </div>
+            <span class="telefone-numero">${numeroFormatado}</span>
+            ${ramalTexto ? `<span class="telefone-ramal">${ramalTexto}</span>` : ''}
+            ${emailTexto ? `<span class="telefone-email">${emailTexto}</span>` : ''}
         </div>
     `;
 
-        // Evento: Copiar telefone ou e-mail
-        const botoesCopiar = div.querySelectorAll('.btn-copiar');
-        const toastElement = div.querySelector('.copiado-toast');
-
-        botoesCopiar.forEach(btn => {
-            btn.addEventListener('click', function (e) {
+        // Evento: Copiar telefone
+        const btnTelefone = div.querySelector('.btn-copiar-telefone');
+        if (btnTelefone) {
+            btnTelefone.addEventListener('click', function (e) {
                 e.stopPropagation();
-                const tipo = this.dataset.tipo;
-                let textoCopiar = '';
-
-                if (tipo === 'telefone') {
-                    const numero = contato.telefone || '';
-                    const nome = contato.nome || '';
-                    textoCopiar = `${nome}: ${numero}${contato.ramal ? ` (Ramal: ${contato.ramal})` : ''}`;
-                } else if (tipo === 'email') {
-                    const email = contato.email || '';
-                    const nome = contato.nome || '';
-                    textoCopiar = `${nome}: ${email}`;
-                }
-
-                // Copiar para área de transferência
                 if (navigator.clipboard) {
-                    navigator.clipboard.writeText(textoCopiar).then(() => {
-                        mostrarFeedbackCopia(toastElement);
+                    navigator.clipboard.writeText(textoTelefone).then(() => {
+                        mostrarFeedbackCopia(toast);
                     }).catch(() => {
-                        copiarFallback(textoCopiar, toastElement);
+                        copiarFallback(textoTelefone, toast);
                     });
                 } else {
-                    copiarFallback(textoCopiar, toastElement);
+                    copiarFallback(textoTelefone, toast);
                 }
             });
-        });
+        }
+
+        // Evento: Copiar e-mail
+        const btnEmail = div.querySelector('.btn-copiar-email');
+        if (btnEmail) {
+            btnEmail.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textoEmail).then(() => {
+                        mostrarFeedbackCopia(toast);
+                    }).catch(() => {
+                        copiarFallback(textoEmail, toast);
+                    });
+                } else {
+                    copiarFallback(textoEmail, toast);
+                }
+            });
+        }
 
         return div;
     }
-
     // ============================
     // FUNÇÕES DE CÓPIA
     // ============================
@@ -279,21 +285,21 @@ $(document).ready(function () {
     // EVENTOS DO POP-UP
     // ============================
 
-document.querySelectorAll('.nav-item').forEach(item => {
-    if (item.textContent.trim().includes('CONTATOS')) {
-        item.addEventListener('click', function (e) {
-            e.preventDefault();
-            abrirPopupTelefones();
-        });
-    }
-});
+    document.querySelectorAll('.nav-item').forEach(item => {
+        if (item.textContent.trim().includes('CONTATOS')) {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                abrirPopupTelefones();
+            });
+        }
+    });
 
-// Fechar pop-up
-document.getElementById('fecharTelefone').addEventListener('click', fecharPopupTelefones);
-document.getElementById('fecharTelefoneBtn').addEventListener('click', fecharPopupTelefones);
+    // Fechar pop-up
+    document.getElementById('fecharTelefone').addEventListener('click', fecharPopupTelefones);
+    document.getElementById('fecharTelefoneBtn').addEventListener('click', fecharPopupTelefones);
 
-// Fechar ao clicar no overlay
-document.querySelector('.popup-overlay')?.addEventListener('click', fecharPopupTelefones);
+    // Fechar ao clicar no overlay
+    document.querySelector('.popup-overlay')?.addEventListener('click', fecharPopupTelefones);
 
     // ============================
     // TECLA ESC FECHA POP-UP
