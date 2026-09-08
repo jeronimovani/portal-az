@@ -122,18 +122,24 @@ $(document).ready(function () {
     // Dados dos contatos (edite aqui para adicionar/remover manualmente)
     const contatosData = {
         publicos: [
-            { id: 1, nome: 'SUPORTE TÉCNICO', telefone: '(11) 4002-8922', ramal: '1234', email: 'suporte@empresa.com' },
-            { id: 2, nome: 'SAC - ATENDIMENTO', telefone: '0800 123 4567', ramal: '', email: 'sac@empresa.com' },
-            { id: 3, nome: 'OUVIDORIA', telefone: '(11) 4002-8922', ramal: '5678', email: 'ouvidoria@empresa.com' },
-            { id: 4, nome: 'VENDAS', telefone: '(11) 4002-8922', ramal: '9012', email: 'vendas@empresa.com' },
-            { id: 5, nome: 'CENTRAL DE RELACIONAMENTO', telefone: '0800 000 0000', ramal: '', email: 'relacionamento@empresa.com' },
+            { id: 1, nome: 'Ativos AZ', telefone: '(67) 3303-2708', ramal: '', email: 'servicecenter@azi.com.br' },
+            { id: 2, nome: 'Compras AZ', telefone: '(67) 3303-2710', ramal: '', email: 'suportesiga@azi.com.br' },
+            { id: 2, nome: 'Compras BR', telefone: '(67) 3303-2740', ramal: '', email: 'suporte@comprasbr.com.br' },
+            { id: 3, nome: 'Suporte SIADES', telefone: '0800-370-0114', ramal: '', email: 'suportesiades@azi.com.br' },
+            { id: 4, nome: 'Suporte PB', telefone: '0800 370 0098', ramal: '', email: 'suporte.pb@azi.com.br' },
+            { id: 5, nome: 'Fornecedores - SIADES', telefone: '', ramal: '', email: 'cadastro.fornecedores@seger.es.gov.br' },
+            { id: 6, nome: 'Fornecedores - PB', telefone: '(83) 3208-9838', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
+            { id: 7, nome: 'Fornecedores - MS', telefone: '(67) 3218-1323/1383', ramal: '', email: 'gocaf@centraldecomoras.pb.gov.br' },
+            { id: 8, nome: 'Fornecedores - PMCG', telefone: '(67) 3314-3267', ramal: '2502', email: 'gecaf.supel@selc.campogrande.ms.gov.br'},
+            { id: 9, nome: 'Fornecedores - MT', telefone: '(65) 9 8432-0112', ramal: '', email: 'fornecedores@seplag.mt.gov.br'},
         ],
         restritos: [
-            { id: 6, nome: 'GERÊNCIA DE TI', telefone: '(11) 4002-8922', ramal: '9999', email: 'ti@empresa.com' },
-            { id: 7, nome: 'RH - RECURSOS HUMANOS', telefone: '(11) 4002-8922', ramal: '8888', email: 'rh@empresa.com' },
-            { id: 8, nome: 'FINANCEIRO', telefone: '(11) 4002-8922', ramal: '7777', email: 'financeiro@empresa.com' },
-            { id: 9, nome: 'DIRETORIA', telefone: '(11) 4002-8922', ramal: '6666', email: 'diretoria@empresa.com' },
-            { id: 10, nome: 'CONTROLE INTERNO', telefone: '(11) 4002-8922', ramal: '5555', email: 'controle@empresa.com' },
+            { id: 10, nome: 'GEPLAN - ES', telefone: '02736365262', ramal: '', email: 'catalogo.siades@seger.es.gov.br' },
+            { id: 11, nome: 'SUCAF - ES', telefone: '02736365261', ramal: '', email: '' },
+            { id: 12, nome: 'GESIS - ES', telefone: '02736365264', ramal: '', email: '' },
+            { id: 13, nome: 'NECCV SESA - ES', telefone: '0273347572', ramal: '', email: '' },
+            { id: 14, nome: 'CATALOGO - MS', telefone: '06733181322', ramal: '', email: '' },
+            { id: 15, nome: 'SAD - MS', telefone: '06733181479', ramal: '', email: 'suprimentos@sad.ms.gov.br' },
         ]
     };
 
